@@ -3,7 +3,7 @@
 本目录在 Git 中仅包含说明与 JSON 元数据，不包含 `.pt` 或 `.ckpt` 文件。
 最终推理权重将在 [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1) 发布。
 当前 Release 尚为草稿；RRUFF 已校验通过，PhaseMix 正在重传。下方链接在正式发布后生效。
-See [resource status and setup](../docs/resources.md) for English instructions.
+下载状态与放置方法：[中文](../docs/resources.zh-CN.md) · [English](../docs/resources.md)。
 仓库当前为私有，下载需要有访问权限的 GitHub 账号。
 
 | 下载附件 | 字节数 | 下载后放置路径 |

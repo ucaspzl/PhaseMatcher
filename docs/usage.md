@@ -1,6 +1,6 @@
 # Inference and outputs
 
-[Home](../README.md) · [Resources](resources.md) · [Architecture](architecture.md)
+[Home](../README.md) · [简体中文](usage.zh-CN.md) · [Resources](resources.md) · [Architecture](architecture.md)
 
 ## Input contract
 

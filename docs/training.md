@@ -1,6 +1,6 @@
 # Training and evaluation
 
-[Home](../README.md) · [Data](data.md) · [Architecture](architecture.md)
+[Home](../README.md) · [简体中文](training.zh-CN.md) · [Data](data.md) · [Architecture](architecture.md)
 
 ## Three training stages
 

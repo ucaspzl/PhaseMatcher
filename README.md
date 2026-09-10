@@ -14,7 +14,7 @@ PhaseMatcher identifies a complete phase set from a powder XRD pattern, without 
 
 ![From language autoregression to phase autoregression](docs/assets/overview.png)
 
-- **Full-library identification:** predict reference entries with a learned STOP decision.
+- **Full-library identification:** predict phases from the complete reference library.
 - **Physics-guided decomposition:** estimate physical deformation parameters and allocate observed intensity to selected phases and the residual.
 - **Greedy or Beam:** follow one path or retain multiple candidates; optionally start from known phases.
 

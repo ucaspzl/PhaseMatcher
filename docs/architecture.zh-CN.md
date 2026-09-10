@@ -1,6 +1,6 @@
 # 模型与训练
 
-[中文首页](../README.zh-CN.md) · [English](architecture.md) · [运行与恢复训练](training.md)
+[中文首页](../README.zh-CN.md) · [English](architecture.md) · [运行与恢复训练](training.zh-CN.md)
 
 ## 数据流
 

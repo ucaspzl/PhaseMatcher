@@ -6,7 +6,7 @@
 
 **[English](README.md) · [简体中文](README.zh-CN.md)**
 
-[快速开始](#快速开始) · [数据与权重](docs/resources.md) · [训练指南](docs/training.md) · [模型结构](docs/architecture.zh-CN.md)
+[快速开始](#快速开始) · [数据与权重](docs/resources.zh-CN.md) · [训练指南](docs/training.zh-CN.md) · [模型结构](docs/architecture.zh-CN.md)
 
 </div>
 
@@ -14,7 +14,7 @@ PhaseMatcher 从一条粉末 XRD 谱中识别完整物相集合，无需预先�
 
 ![从语言自回归到物相自回归](docs/assets/overview.png)
 
-- **全库识别**：从完整参考库预测物相，通过 STOP 判断集合是否完整。
+- **全库识别**：从完整参考库预测物相。
 - **物理引导谱分解**：预测物理形变参数，将观测强度分配给已选物相和残差。
 - **Greedy / Beam**：沿单条路径预测，或保留多个候选；也可从已知物相继续预测。
 
@@ -46,7 +46,7 @@ python -m pytest -q
 | PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k)，上传中 | 正在重新上传 |
 | 基于 RRUFF 的混合谱 | 740 | 待上传 | 已在 Release 草稿中校验通过 |
 
-**资源目前尚未全部发布。** 使用预训练示例前，请先查看[下载状态、放置路径与校验方法](docs/resources.md)。数据和权重单独托管，不混入源码。
+**资源目前尚未全部发布。** 使用预训练示例前，请先查看[下载状态、放置路径与校验方法](docs/resources.zh-CN.md)。数据和权重单独托管，不混入源码。
 
 ### 3. 跑一个测试集样本
 
@@ -69,7 +69,7 @@ outputs/example/
 
 ## 使用自己的谱
 
-输入为非负 NumPy 数组，形状 `[3501]` 或 `[B, 3501]`；2θ 网格为 10°–80°，间隔 0.02°。预处理要求、预测命令和已知物相续推见[使用指南](docs/usage.md)。
+输入为非负 NumPy 数组，形状 `[3501]` 或 `[B, 3501]`；2θ 网格为 10°–80°，间隔 0.02°。预处理要求、预测命令和已知物相续推见[使用指南](docs/usage.zh-CN.md)。
 
 下载资源后，可先做一个小规模评测：
 
@@ -77,7 +77,7 @@ outputs/example/
 phasematcher evaluate --config configs/phasemix.yaml --limit 8 --device cpu
 ```
 
-去掉 `--limit 8` 即评测完整测试集。三阶段训练和多 GPU 评测见[训练指南](docs/training.md)。
+去掉 `--limit 8` 即评测完整测试集。三阶段训练和多 GPU 评测见[训练指南](docs/training.zh-CN.md)。
 
 ## 代码结构
 
@@ -96,9 +96,9 @@ src/phasematcher/
 
 | 文档 | 内容 |
 |---|---|
-| [资源指南](docs/resources.md) | 下载、放置与完整性校验 |
-| [使用指南](docs/usage.md) | 输入预处理、输出字段、Python 接口 |
-| [训练指南](docs/training.md) | 三阶段训练、初始化、中断恢复与评测 |
+| [资源指南](docs/resources.zh-CN.md) | 下载、放置与完整性校验 |
+| [使用指南](docs/usage.zh-CN.md) | 输入预处理、输出字段、Python 接口 |
+| [训练指南](docs/training.zh-CN.md) | 三阶段训练、初始化、中断恢复与评测 |
 | [模型结构（中文）](docs/architecture.zh-CN.md) | 数据流、模块职责、损失与搜索 |
 | [数据规范（中文）](docs/data.zh-CN.md) | 划分、字段形状、观测构造 |
 

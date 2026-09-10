@@ -1,6 +1,6 @@
 # 数据资源
 
-[中文首页](../README.zh-CN.md) · [English](data.md) · [下载与放置](resources.md)
+[中文首页](../README.zh-CN.md) · [English](data.md) · [下载与放置](resources.zh-CN.md)
 
 两套数据各自有独立的参考库、五份物理扰动实现和混合清单。
 混合谱按清单即时构造，不额外存一份巨大的混合谱矩阵。

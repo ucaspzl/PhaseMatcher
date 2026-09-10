@@ -1,6 +1,6 @@
 # Data and pretrained weights
 
-[Home](../README.md) · [中文首页](../README.zh-CN.md)
+[Home](../README.md) · [简体中文](resources.zh-CN.md)
 
 ## Release status
 
