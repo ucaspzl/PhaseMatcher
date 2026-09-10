@@ -28,6 +28,11 @@ def read_checkpoint(path):
 
 
 def load_model(path, device="cpu", library=None):
+    """Return (evaluation-mode model, metadata), validating any supplied library.
+
+    Accepts versioned tensor exports, not resumable Lightning checkpoints.
+    When provided, the library must match the entry count, grid size and ID order.
+    """
     checkpoint = read_checkpoint(path)
     cfg = checkpoint["model_config"]
     if library is not None:

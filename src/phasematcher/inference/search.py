@@ -22,6 +22,13 @@ class _State:
 
 
 class Search:
+    """Full-library search over max-normalized observations.
+
+    ``network`` is an evaluation-mode STOP-stage PhaseMatcher; ``library`` is a
+    SpectrumLibrary in checkpoint row order. Each input returns ranked Prediction
+    objects. Decomposition uses sorted IDs, independently of selection order.
+    """
+
     def __init__(self, network, library, *, decomposition_batch_size=64):
         self.network, self.library = network, library
         self.model = network.model

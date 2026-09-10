@@ -1,93 +1,67 @@
-# 模型与训练
+# Architecture
 
-## 数据流
+[Home](../README.md) · [中文](architecture.zh-CN.md) · [Training](training.md)
 
-```text
-原始观测 x + 已选物相的全部参考谱
-                  │
-                  ▼
-            谱分解模块
-         ┌────────┴────────┐
-         ▼                 ▼
-    各物相贡献谱       共同尺度残差
-                           │ 最大值归一化
-                           ▼
-已选物相历史 ────────► Phase Head ──► 物相 logits
-         └──────────► STOP Head  ──► STOP logit
-                       ▲
-                    原始观测 x
-```
+## Prediction loop
 
-空历史直接使用原始观测。每次增加物相后，从原始观测和整个已选集合重新分解，
-不是对上一步残差重复扣除。仅查询残差归一化；贡献谱与物理残差保持观测的共同强度尺度。
+1. Start from the original observation and an empty phase history.
+2. The Phase Head predicts a library entry from the residual query and history. The STOP Head uses the original observation and history to judge completion.
+3. After selecting a phase, decompose the original observation using **all** selected reference spectra.
+4. Max-normalize the reconstructed residual for the next query. Continue until STOP or the four-phase limit.
 
-## 核心文件
+The method recomputes the decomposition from the original observation; it does not repeatedly subtract from the previous residual. Each Beam path owns its history and query.
 
-| 文件 | 职责 |
+## Components
+
+| File | Responsibility |
 |---|---|
-| `models/encoder.py` | 四层步长卷积 + 三层 Transformer；单相阶段另用注意力汇聚 |
-| `models/heads.py` | 历史表示、六层 Phase 解码器、两层 STOP 解码器 |
-| `models/decomposition.py` | 多尺度特征、局部相关、形变预测、参考特征变换、强度分配 |
-| `models/system.py` | 组合模块；单相 → Phase → STOP 的严格初始化 |
-| `training/losses.py` | 保守贡献目标和七项谱分解损失 |
-| `training/module.py` | 真实历史前缀监督、联合交叉熵、显式调度 |
-| `inference/search.py` | 全库搜索和每条路径的残差重建 |
+| [encoder.py](../src/phasematcher/models/encoder.py) | Strided convolutions and Transformer spectrum encoding |
+| [heads.py](../src/phasematcher/models/heads.py) | Phase identity/history representation, six-layer Phase and two-layer STOP decoders |
+| [decomposition.py](../src/phasematcher/models/decomposition.py) | Multiscale features, local correlation, deformation and intensity allocation |
+| [system.py](../src/phasematcher/models/system.py) | Model composition and stage-to-stage initialization |
+| [losses.py](../src/phasematcher/training/losses.py) | Contribution targets and seven decomposition losses |
+| [module.py](../src/phasematcher/training/module.py) | Prefix supervision and validation-driven scheduling |
+| [search.py](../src/phasematcher/inference/search.py) | Full-library Greedy/Beam and per-path residual updates |
 
-谱分解先估计共有偏移、逐物相应变与三种展宽权重，对参考谱的多尺度特征做坐标重采样与平滑。
-随后按衍射角位置分配观测强度，softmax 的源维包含所有已选物相及残差。
-输出非负，并且所有贡献与残差逐点相加等于观测。结构坐标本身不在这里变换。
+## Spectral decomposition
 
-## 训练目标
+The module estimates a shared shift, phase-specific strain and three broadening weights. It resamples and smooths **reference features along the angular coordinate**, not atomic coordinates. The adapted features condition pointwise intensity allocation among selected phases and one residual source.
 
-| 阶段 | 初始化 | 目标 | 调度 |
-|---|---|---|---|
-| single | 随机参数 | 单相分类交叉熵，label smoothing=0.05 | 每个 epoch 按训练损失调度 |
-| phase | 单相编码器、分类权重 | λ_phase × 下一物相 CE + λ_decomposition × 谱分解损失 | 每次验证按固定相数 Exact-set@1 调度 |
-| stop | Phase 阶段全部参数；STOP 分支新初始化 | 上述两项 + λ_stop × STOP CE | 每次验证按自动停止 Exact-set@1 调度 |
+A source-axis softmax produces nonnegative allocation fractions. Multiplication by the original observation gives contributions and residual whose pointwise sum equals the observation.
 
-训练历史按混合权重降序的真实前缀提供。所有非空前缀，包括完整集合，都有谱分解监督；
-只有尚缺物相的前缀计算下一物相 CE。第三阶段完整集合的目标为 STOP。
-第三阶段两种 CE 都基于“候选物相 + STOP”的联合 logits，但分别对两类步骤平均。
-CE 梯度可以通过残差查询传回谱分解模块。
+| Interface | Shape | Meaning |
+|---|---|---|
+| Observation | `[B,L]` | Common-scale observation |
+| References | `[B,K,L]` | Reference spectra for the selected set |
+| Valid mask | `[B,K]` | Active reference slots |
+| Contributions | `[B,K,L]` | Allocated phase intensity |
+| Remainder | `[B,L]` | Unexplained intensity |
+| Alignment parameters | `[B,K,5]` | Shift in bins, dimensionless strain, three broadening weights |
 
-PhaseMix 使用真实目标加 hard/random 混合候选采样；RRUFF 使用全部 740 个候选。
-训练不屏蔽已选物相或空历史的 STOP；这些有效动作限制只在推理时使用。
+The shift is shared across valid phases. Only the query residual is max-normalized; physical contribution/residual outputs retain the common observation scale.
 
-### 谱分解的七项损失
+## Supervision
 
-| 配置名 | 约束 | 内部权重 |
+Training uses true phase prefixes ordered by decreasing mixture weight. Every nonempty prefix, including a complete set, receives decomposition supervision. Next-phase cross-entropy applies only to incomplete prefixes; complete prefixes receive STOP supervision in stage three.
+
+Phase and STOP losses use the joint action logits in stage three, averaged separately over their respective step types. Phase classification gradients can propagate through residual queries into decomposition.
+
+| Decomposition term | Constraint | Weight |
 |---|---|---:|
-| component | 各物相贡献的加权逐点 SmoothL1 | 1.0 |
-| component_shape | 各物相贡献的余弦谱形误差 | 0.1 |
-| removal | 已选总贡献的加权逐点 SmoothL1 | 2.0 |
-| allocation | 每点源分配比例的 KL | 1.0 |
-| removal_area | 已选总贡献的相对积分强度误差 | 0.1 |
-| query_shape | 归一化残差的余弦谱形误差 | 0.2 |
-| alignment | 归一化偏移/应变和期望展宽幅度正则 | 0.0001 |
+| `component` | Weighted pointwise SmoothL1 on individual contributions | 1.0 |
+| `component_shape` | Contribution cosine shape error | 0.1 |
+| `removal` | Weighted pointwise SmoothL1 on selected total contribution | 2.0 |
+| `allocation` | Pointwise source-allocation KL | 1.0 |
+| `removal_area` | Relative integrated-intensity error | 0.1 |
+| `query_shape` | Normalized residual cosine shape error | 0.2 |
+| `alignment` | Shift/strain and expected broadening magnitude regularization | 0.0001 |
 
-λ_phase、λ_stop、λ_decomposition 默认均为 1。
-各项内部权重在 `configs/base.yaml` 的 `loss.decomposition` 中定义。
-训练中先对一个前缀批次求各项损失，再按前缀样本数汇总；保留当前联合训练的归约方式。
+See `loss.decomposition` in [base.yaml](../configs/base.yaml) for the remaining constants and [training](training.md) for stage budgets and scheduling.
 
-第二、三阶段预测部分与谱分解部分学习率均为 5×10⁻⁵。
-ReduceLROnPlateau 使用 `patience=3`：在建立最佳值后连续 **4 次** 验证未改善才减半，最低 5×10⁻⁶。
-检查序号、调度器和候选采样 RNG 随新训练 checkpoint 保存；恢复后不重复调度同一验证步。
-DataLoader 的预取/打乱状态不保证逐样本无缝恢复，中断恢复不等于逐位复现。
+## IDs and search semantics
 
-PhaseMix 阶段预算为 120000 / 40000 个优化器步，均每 2000 步验证。
-STOP 使用两步梯度累积，因此其验证间隔对应 4000 个训练批次。
-RRUFF 阶段预算为 3715 / 1429 步，每 143 步验证，batch size 均为每卡 16。
-单相配置提供可运行的参考训练配方；附带既有单相权重，不宣称该默认配方逐位重现原归档运行。
+Library IDs are **0 through N−1**. STOP is the final joint-logit column N, not a reference entry. BOS uses an internal sentinel N+1; padding uses −1.
 
-## 搜索与编号
+Inference masks selected phases and disallows STOP before selecting a first phase. Training does not apply those action masks. Beam separately retains up to W unfinished and W completed paths, scored by cumulative action log-probability. Different orders of the same set are not deduplicated. Reaching four phases ends a path without adding a STOP score.
 
-库内记录编号为 **0 到 N−1**。STOP 不是参考库条目；实现将它放在联合输出的最后一列 N。
-内部 BOS 哨兵 N+1 只用于构造历史，PAD=−1 只用于批次填充。
-
-Greedy 每步选最高分有效动作。Beam 对每条路径按累计动作对数概率扩展，分别保留最多 W 条
-未完成路径和 W 条已完成路径；默认 W=10。达到四相上限强制结束，不额外扣停止分数。
-同一无序集合的不同预测顺序不去重，与当前评测一致。
-
-参考谱按排序后的集合打包送入谱分解；解码历史仍保留预测顺序。
-已知物相续推支持两种搜索；不同长度的历史分组编码，避免填充位置干扰最后位置的读出。
-推理的残差归一化保留当前评测阈值（分母下限 10⁻⁶，有效值阈值 10⁻⁸）；训练分母下限为 10⁻⁸。
+References are sorted by ID for decomposition, while decoder history preserves prediction order. Both search strategies accept known-phase histories. Inference and training retain their respective residual-normalization thresholds; these numerical conventions have not been changed during repository cleanup.

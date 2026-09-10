@@ -1,7 +1,20 @@
 # 权重
 
 本目录在 Git 中仅包含说明与 JSON 元数据，不包含 `.pt` 或 `.ckpt` 文件。
-下载地址尚未发布；取得权重后放入相应的 `phasemix/` 或 `rruff/` 子目录。
+最终推理权重将在 [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1) 发布。
+当前 Release 尚为草稿；RRUFF 已校验通过，PhaseMix 正在重传。下方链接在正式发布后生效。
+See [resource status and setup](../docs/resources.md) for English instructions.
+仓库当前为私有，下载需要有访问权限的 GitHub 账号。
+
+| 下载附件 | 字节数 | 下载后放置路径 |
+|---|---:|---|
+| [phasemix-last.pt](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) | 493651977 | `ckpt/phasemix/last.pt` |
+| [rruff-last.pt](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) | 218159113 | `ckpt/rruff/last.pt` |
+
+下载后按上表重命名为 `last.pt`。预测和评测只需要对应的最终权重与数据资源。
+可用 `phasematcher check --config configs/phasemix.yaml --hash` 校验推理必需资源；无需前两阶段权重。
+SHA-256 见对应的 `last.json` 或根目录 `assets.json`。
+`single.pt` 和 `phase.pt` 尚未上传；以下保留本地三阶段资产的来源说明。
 
 | 数据集 | single.pt | phase.pt | last.pt |
 |---|---|---|---|

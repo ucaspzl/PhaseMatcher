@@ -23,10 +23,24 @@ def _write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def check(cfg, verify_hash=False):
+def _asset_records(manifest, dataset, scope):
+    """Select required assets without requiring unpublished training checkpoints."""
+    if scope not in {"inference", "dataset", "all"}:
+        raise ValueError(f"Unknown asset scope: {scope}")
+    records = [f for f in manifest["files"] if f"/{dataset}/" in f["path"]]
+    if scope == "all":
+        return records
+    prefix = f"dataset/{dataset}/" + ("reference/" if scope == "inference" else "")
+    return [
+        f for f in records if f["path"].startswith(prefix) or f["path"] == f"ckpt/{dataset}/last.pt"
+    ]
+
+
+def check(cfg, verify_hash=False, scope="inference"):
+    """Validate inference assets by default; optionally inspect the full dataset."""
     root = Path(cfg.data_root).parents[1]
     manifest = json.loads((root / "assets.json").read_text(encoding="utf-8"))
-    selected = [f for f in manifest["files"] if f"/{cfg.dataset}/" in f["path"]]
+    selected = _asset_records(manifest, cfg.dataset, scope)
     if not selected:
         raise ValueError("Dataset is missing from assets.json")
     for item in tqdm(selected, desc="Checking assets"):
@@ -43,7 +57,7 @@ def check(cfg, verify_hash=False):
     model, _ = load_model(Path(cfg.checkpoint_root) / "last.pt", library=library)
     del model
     splits = {}
-    for split in ("train", "val", "test"):
+    for split in () if scope == "inference" else ("train", "val", "test"):
         data = MixtureDataset(cfg.data_root, split, seed=cfg.seed, measurement=cfg.measurement)
         sample = data[0]
         if not torch.isfinite(sample["mixture"]).all():
@@ -52,6 +66,7 @@ def check(cfg, verify_hash=False):
     return dict(
         dataset=str(cfg.dataset),
         assets=len(selected),
+        scope=scope,
         sha256_verified=verify_hash,
         phases=len(library),
         points=library.points,
@@ -157,6 +172,12 @@ def main():
     p = commands.add_parser("check", help="Validate dataset/checkpoint assets")
     p.add_argument("--config", required=True)
     p.add_argument("--hash", action="store_true")
+    p.add_argument(
+        "--scope",
+        choices=("inference", "dataset", "all"),
+        default="inference",
+        help="inference: final weights + reference; dataset: add mixtures; all: all stages",
+    )
     p = commands.add_parser("train", help="Train one of the three stages")
     p.add_argument("--config", required=True)
     p.add_argument("--stage", choices=("single", "phase", "stop"), required=True)
@@ -196,7 +217,7 @@ def main():
     else:
         cfg = load_config(args.config)
         if args.command == "check":
-            result = check(cfg, args.hash)
+            result = check(cfg, args.hash, args.scope)
         elif args.command == "evaluate":
             result = evaluate(cfg, args)
         else:

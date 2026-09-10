@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 import torch
 from omegaconf import OmegaConf
+
 from phasematcher.config import load_config
 from phasematcher.data import SpectrumLibrary
 

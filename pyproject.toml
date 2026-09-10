@@ -6,11 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "phasematcher"
 version = "1.0.0"
 description = "Autoregressive phase-set identification with physics-guided spectral decomposition"
+readme = "README.md"
 requires-python = ">=3.10"
 dependencies = ["torch>=2.4", "numpy>=1.24", "scipy>=1.10", "omegaconf>=2.3", "pytorch-lightning>=2.4", "tqdm>=4.66"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.urls]
+Repository = "https://github.com/ucaspzl/PhaseMatcher"
+Documentation = "https://github.com/ucaspzl/PhaseMatcher/tree/main/docs"
 
 [project.scripts]
 phasematcher = "phasematcher.cli:main"

@@ -1,4 +1,5 @@
 import torch
+
 from phasematcher.checkpoint import load_model, save_weights, sha256
 from phasematcher.models import PhaseMatcher, SinglePhaseModel
 from phasematcher.training.losses import prefix_targets

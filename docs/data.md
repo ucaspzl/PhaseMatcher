@@ -1,84 +1,65 @@
-# 数据资源
+# Data specification
 
-两套数据各自有独立的参考库、五份物理扰动实现和混合清单。
-混合谱按清单即时构造，不额外存一份巨大的混合谱矩阵。
+[Home](../README.md) · [中文](data.zh-CN.md) · [Downloads](resources.md)
 
-| 数据集 | 库记录数 N | 训练混合数 | 验证混合数 | 测试混合数 |
+Both datasets contain a reference library, five perturbed single-phase realizations per entry, and mixture manifests. Mixtures are constructed on demand rather than stored as a dense mixture matrix.
+
+| Dataset | Library entries | Training mixtures | Validation | Test |
 |---|---:|---:|---:|---:|
 | PhaseMix-135K | 135258 | 12135258 | 100000 | 100000 |
-| RRUFF | 740 | 100000 | 7400 | 7400 |
+| RRUFF-based mixtures | 740 | 100000 | 7400 | 7400 |
 
-PhaseMix 的库条目是结构记录，不对不同结构记录 ID 做物相去重。
-RRUFF 参考谱来自预处理后的单相实测谱，混合观测基于对应的物理扰动单相谱构造。
-`entry.npy` 是模型库内编号到来源记录 ID 的唯一顺序映射；不能重新排序。
+PhaseMix entries are structure records; distinct record IDs are not deduplicated into a mineral/species label. RRUFF references are preprocessed measured single-phase profiles. `entry.npy` defines the unique row-ID to source-record mapping and must not be reordered.
 
-## 磁盘结构
+## Files
 
-```text
-dataset/<phasemix|rruff>/
-├── reference/
-│   ├── patterns.npy           [N, 3501]       参考单相谱，float32
-│   ├── entry.npy              [N]             记录 ID 字符串
-│   └── axis_two_theta.npy     [3501]          2θ，单位 degree
-├── observations/
-│   ├── patterns.npy           [N, 5, 3501]    五种扰动实现
-│   ├── entry.npy              [N]             与 reference 顺序完全相同
-│   └── axis_two_theta.npy     [3501]          与 reference 网格相同
-└── manifest/<train|val|test>/
-    ├── <split>_ids.npy        [M, 4]          按权重降序的库内编号，空位 −1
-    ├── <split>_weights.npy    [M, 4]          混合权重，空位 0
-    └── <split>_counts.npy     [M]             相数，1–4
-```
+Paths are relative to `dataset/<phasemix|rruff>/`.
 
-库文件强度采用峰值 100 的存储尺度；读取时除以 100。
-PhaseMix 扰动谱为 float16，RRUFF 扰动谱为 float32，读取后统一 float32。
-清单编号的磁盘 dtype 为 PhaseMix int32 / RRUFF int64；进入模型统一 int64。
-其余每个文件的准确 dtype、形状和哈希见根目录 `assets.json`。
-
-## 观测构造
-
-训练随机抽取单相扰动实现 0、1、2；验证固定实现 3，测试固定实现 4。
-加权混合时还施加共有零点偏移、额外展宽、平滑背景和高斯噪声。
-
-| 混合级扰动 | 范围 |
-|---|---|
-| 共有零点偏移 | −0.03° 到 0.03° |
-| 额外 FWHM | 0 到 0.05° |
-| 背景峰值 / 结构混合谱峰值 | 0 到 0.01 |
-| 噪声标准差 / 结构混合谱峰值 | 0.0008 到 0.002 |
-
-这些是**混合时的附加扰动**，不是已存单相扰动库中全部物理变化的参数范围。
-观测加背景与噪声后截断到非负，再按整个观测的最大值归一化。
-贡献目标除以同一个观测尺度，不能分别对各条贡献谱归一化。
-
-验证/测试分别使用 `seed + 1 + sample_index` / `seed + 2 + sample_index` 的 RandomState。
-PhaseMix seed=20260826，RRUFF seed=20260909；保持原数据实现的随机采样顺序。
-训练使用 worker 随机状态，因此变更卡数、worker 数或批量会改变采样轨迹。
-
-## 模型批次字段
-
-| 字段 | 形状 | 含义 |
+| Path | Shape | Meaning |
 |---|---|---|
-| index | `[B]` | 混合清单行号 |
-| mixture | `[B,1,3501]` | 已归一化原始观测 |
-| phase_ids | `[B,4]` | 真实历史顺序，空位 −1 |
-| phase_weights | `[B,4]` | 混合权重 |
-| counts | `[B]` | 真实相数，仅训练/评测标签使用 |
-| targets | `[B,5]` | 真实物相序列、STOP 输出列 N、填充 −1 |
-| reference_patterns | `[B,4,1,3501]` | 按真实历史顺序排列的参考谱 |
-| component_contributions | `[B,4,1,3501]` | 同一观测尺度下的各分量贡献 |
-| residual_patterns_common | `[B,5,1,3501]` | 各真实前缀的共同尺度残差 |
-| observation_scale | `[B,1]` | 观测归一化前的最大值 |
+| `reference/patterns.npy` | `[N,3501]` | Reference patterns, float32 |
+| `reference/entry.npy` | `[N]` | Source record IDs |
+| `reference/axis_two_theta.npy` | `[3501]` | 2θ in degrees |
+| `observations/patterns.npy` | `[N,5,3501]` | Five perturbed realizations |
+| `observations/entry.npy` | `[N]` | Same ID order as reference |
+| `observations/axis_two_theta.npy` | `[3501]` | Same angle grid as reference |
+| `manifest/SPLIT/SPLIT_ids.npy` | `[M,4]` | IDs in descending weight order; padding −1 |
+| `manifest/SPLIT/SPLIT_weights.npy` | `[M,4]` | Mixture weights; padding 0 |
+| `manifest/SPLIT/SPLIT_counts.npy` | `[M]` | Phase counts, 1–4 |
 
-完整集合也接受谱分解监督。构造保守目标时，已选总贡献逐点限制为不超过观测，
-再按各分量比例分配已解释强度；残差目标等于观测减去这部分强度。
-这处理了噪声导致结构分量之和局部高于观测的问题。
+`SPLIT` is `train`, `val` or `test`. Library patterns are stored at peak scale 100 and divided by 100 when read. PhaseMix perturbations use float16; RRUFF perturbations use float32. Both are converted to float32 for computation. Manifest IDs are int32 for PhaseMix and int64 for RRUFF, converted to int64 when loaded.
 
-测试时模型只接收 `mixture` 和完整参考库，不接收上述真实 ID、权重或相数。
-评测脚本在搜索完成后才使用标签计分。
+Exact dtypes, shapes, sizes and SHA-256 digests are in [assets.json](../assets.json).
 
-## 可搬迁性
+## Mixture construction
 
-数据与权重均为本目录中的真实文件，不是指向旧目录或集群的符号链接。
-只需复制整个目录，在目标机器重装环境即可使用；配置里的资源路径相对于项目目录解析。
-既有单相扰动库直接作为固定资产交付，本包不混入旧项目的大规模结构模拟与基线脚本。
+Training samples realizations 0, 1 and 2; validation uses realization 3 and testing uses realization 4. Additional mixture-level perturbations are:
+
+| Perturbation | Range |
+|---|---|
+| Shared zero shift | −0.03° to 0.03° |
+| Additional FWHM | 0 to 0.05° |
+| Background peak / structural-mixture peak | 0 to 0.01 |
+| Gaussian noise standard deviation / structural-mixture peak | 0.0008 to 0.002 |
+
+These are additional mixture-level perturbations, not the complete parameter ranges used to generate the stored single-phase bank. Observations are clipped to nonnegative values and divided by their overall maximum. All contribution targets use **the same observation scale**, not separate per-component normalization.
+
+Validation/test use `seed + 1 + sample_index` / `seed + 2 + sample_index` with NumPy RandomState. Seeds are 20260826 (PhaseMix) and 20260909 (RRUFF). Training uses worker RNG states.
+
+## Batch fields
+
+| Field | Shape | Meaning |
+|---|---|---|
+| `index` | `[B]` | Manifest row |
+| `mixture` | `[B,1,3501]` | Normalized observation |
+| `phase_ids`, `phase_weights` | `[B,4]` | Ordered targets and weights |
+| `counts` | `[B]` | True phase count; supervision only |
+| `targets` | `[B,5]` | Phase sequence, STOP column N, padding −1 |
+| `reference_patterns` | `[B,4,1,3501]` | Target references |
+| `component_contributions` | `[B,4,1,3501]` | Common-scale contribution targets |
+| `residual_patterns_common` | `[B,5,1,3501]` | Residual targets for all prefixes |
+| `observation_scale` | `[B,1]` | Pre-normalization observation maximum |
+
+Conservative targets cap selected total contribution pointwise at the observation and distribute it among selected phases in proportion to their target intensity. Residual targets are the observation minus that contribution. This handles local noise-induced discrepancies while preserving nonnegativity and intensity conservation.
+
+At inference the model receives only the observation and reference library, not labels, weights or phase counts. The test example uses labels only inside data construction, never as model input.

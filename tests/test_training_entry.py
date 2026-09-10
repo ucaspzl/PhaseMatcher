@@ -2,11 +2,12 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+from pytorch_lightning import Trainer
+
 from phasematcher.checkpoint import read_checkpoint
 from phasematcher.data import MixtureDataset
 from phasematcher.training.module import TrainingModule
 from phasematcher.training.runner import TrainingData
-from pytorch_lightning import Trainer
 
 
 def make_mixtures(cfg, library):

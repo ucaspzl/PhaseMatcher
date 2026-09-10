@@ -1,5 +1,6 @@
 import pytest
 import torch
+
 from phasematcher.inference import Search
 from phasematcher.models import PhaseMatcher
 
