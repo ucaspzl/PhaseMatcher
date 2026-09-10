@@ -1,0 +1,27 @@
+base: base.yaml
+dataset: rruff
+seed: 20260909
+data_root: dataset/rruff
+checkpoint_root: ckpt/rruff
+output_root: outputs/rruff
+model:
+  num_phases: 740
+sampling:
+  mode: all
+  negative_count: 740
+  hard_fraction: 0.0
+  hard_pool_size: 740
+training:
+  single:
+    batch_size: 32
+    max_epochs: 120
+    validation_epochs: 1
+  phase:
+    batch_size: 16
+    max_steps: 3715
+    validation_steps: 143
+  stop:
+    batch_size: 16
+    accumulate: 1
+    max_steps: 1429
+    validation_steps: 143

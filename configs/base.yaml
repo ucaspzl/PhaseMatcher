@@ -1,0 +1,100 @@
+# Shared architecture; dataset presets contain only data/run differences.
+model:
+  num_phases: null
+  max_components: 4
+  d_model: 512
+  decoder_layers: 6
+  stop_decoder_layers: 2
+  nhead: 8
+  ff_dim: 2048
+  dropout: 0.05
+  temperature: 0.07
+  spectrum_encoder:
+    input_points: 3501
+    channel: 512
+    d_model: 512
+    layers: 3
+    nhead: 8
+    ff_dim: 2048
+    dropout: 0.05
+decomposition:
+  base_channels: 24
+  levels: 4
+  attention_heads: 4
+  attention_layers: 2
+  max_shift_bins: 10.0
+  max_strain: 0.005
+  two_theta_min_deg: 10.0
+  two_theta_max_deg: 80.0
+  alignment_regions: 8
+  correlation_logit_scale: 20.0
+  support_radius_bins: 15
+  phase_logit_bias: -0.5
+  remainder_logit_bias: 0.5
+measurement:
+  zero_shift_deg: [-0.03, 0.03]
+  extra_fwhm_deg: [0.0, 0.05]
+  background_peak_ratio: [0.0, 0.01]
+  gaussian_noise_sigma_peak_ratio: [0.0008, 0.002]
+loss:
+  lambda_phase: 1.0
+  lambda_stop: 1.0
+  lambda_decomposition: 1.0
+  label_smoothing: 0.05
+  decomposition:
+    smooth_l1_beta: 0.02
+    background_point_weight: 0.05
+    removal_focus_weight: 2.0
+    minimum_target_area: 0.01
+    component_weight: 1.0
+    component_shape_weight: 0.1
+    removal_weight: 2.0
+    allocation_weight: 1.0
+    removal_area_weight: 0.1
+    query_shape_weight: 0.2
+    alignment_weight: 0.0001
+sampling:
+  mode: hard_mixed
+  negative_count: 8192
+  hard_fraction: 0.5
+  hard_pool_size: 32768
+training:
+  devices: 1
+  workers: 2
+  precision: bf16-mixed
+  gradient_clip: 1.0
+  eval_batch_size: 16
+  single:
+    lr: 0.0002
+    weight_decay: 0.01
+    batch_size: 256
+    accumulate: 1
+    max_steps: -1
+    max_epochs: 500
+    validation_steps: null
+    validation_epochs: 10
+    factor: 0.6
+    patience: 4
+    min_lr: 0.00001
+  phase:
+    lr: 0.00005
+    weight_decay: 0.0001
+    batch_size: 18
+    accumulate: 1
+    max_steps: 120000
+    max_epochs: 1000
+    validation_steps: 2000
+    factor: 0.5
+    patience: 3
+    min_lr: 0.000005
+  stop:
+    lr: 0.00005
+    weight_decay: 0.0001
+    batch_size: 16
+    accumulate: 2
+    max_steps: 40000
+    max_epochs: 1000
+    validation_steps: 2000
+    factor: 0.5
+    patience: 3
+    min_lr: 0.000005

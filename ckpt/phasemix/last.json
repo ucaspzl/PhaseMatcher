@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "stage": "stop",
+  "dataset": "phasemix",
+  "model_config": {
+    "num_phases": 135258,
+    "max_components": 4,
+    "d_model": 512,
+    "decoder_layers": 6,
+    "stop_decoder_layers": 2,
+    "nhead": 8,
+    "ff_dim": 2048,
+    "dropout": 0.05,
+    "temperature": 0.07,
+    "spectrum_encoder": {
+      "input_points": 3501,
+      "channel": 512,
+      "d_model": 512,
+      "layers": 3,
+      "nhead": 8,
+      "ff_dim": 2048,
+      "dropout": 0.05
+    }
+  },
+  "decomposition_config": {
+    "base_channels": 24,
+    "levels": 4,
+    "attention_heads": 4,
+    "attention_layers": 2,
+    "max_shift_bins": 10.0,
+    "max_strain": 0.005,
+    "two_theta_min_deg": 10.0,
+    "two_theta_max_deg": 80.0,
+    "alignment_regions": 8,
+    "correlation_logit_scale": 20.0,
+    "support_radius_bins": 15,
+    "phase_logit_bias": -0.5,
+    "remainder_logit_bias": 0.5
+  },
+  "global_step": 40000,
+  "epoch": 0,
+  "source_sha256": "b7c2e369ad7f865f12988db3539d6d9dfbd5b8d8d7f499b2b442f46d64128413",
+  "library_entry_sha256": "bd22258103fa81b9955cb12c8f674c13f79cc9c05a64d9435be580bd9f50c891",
+  "sha256": "89b3017a4c24754df19822577c9c5994e99242b84830814dfe429b0e58df26a9",
+  "bytes": 493651977
+}

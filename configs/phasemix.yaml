@@ -1,0 +1,8 @@
+base: base.yaml
+dataset: phasemix
+seed: 20260826
+data_root: dataset/phasemix
+checkpoint_root: ckpt/phasemix
+output_root: outputs/phasemix
+model:
+  num_phases: 135258

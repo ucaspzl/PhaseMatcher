@@ -1,0 +1,323 @@
+{
+  "format_version": 1,
+  "files": [
+    {
+      "path": "ckpt/phasemix/single.pt",
+      "bytes": 335787306,
+      "sha256": "3f18a9b849850e085b5145d3a7c3569758bbeac22f3784a3360b4a1965736b7b"
+    },
+    {
+      "path": "ckpt/phasemix/phase.pt",
+      "bytes": 460008030,
+      "sha256": "4270a76569106763afcbf66604d1b7bc499d1fd46ab306159ad035caad365b38"
+    },
+    {
+      "path": "ckpt/phasemix/last.pt",
+      "bytes": 493651977,
+      "sha256": "89b3017a4c24754df19822577c9c5994e99242b84830814dfe429b0e58df26a9"
+    },
+    {
+      "path": "dataset/phasemix/reference/patterns.npy",
+      "bytes": 1894153160,
+      "sha256": "155dfa7a290f66eac2752cfa03dc8060ec44a2c3e25da9a9fad4069eb2f90422",
+      "shape": [
+        135258,
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/phasemix/reference/entry.npy",
+      "bytes": 7574576,
+      "sha256": "bd22258103fa81b9955cb12c8f674c13f79cc9c05a64d9435be580bd9f50c891",
+      "shape": [
+        135258
+      ],
+      "dtype": "<U14"
+    },
+    {
+      "path": "dataset/phasemix/reference/axis_two_theta.npy",
+      "bytes": 14132,
+      "sha256": "408c1e22e665bd49497a4b9c28b476cc8317646e097cf690df37289e3b278d5b",
+      "shape": [
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/phasemix/observations/patterns.npy",
+      "bytes": 4735382708,
+      "sha256": "b862def5ab29d38f98f8d26dcec6b6c26e1dabcb6de488e687e176624f392577",
+      "shape": [
+        135258,
+        5,
+        3501
+      ],
+      "dtype": "float16"
+    },
+    {
+      "path": "dataset/phasemix/observations/entry.npy",
+      "bytes": 7574576,
+      "sha256": "bd22258103fa81b9955cb12c8f674c13f79cc9c05a64d9435be580bd9f50c891",
+      "shape": [
+        135258
+      ],
+      "dtype": "<U14"
+    },
+    {
+      "path": "dataset/phasemix/observations/axis_two_theta.npy",
+      "bytes": 14132,
+      "sha256": "408c1e22e665bd49497a4b9c28b476cc8317646e097cf690df37289e3b278d5b",
+      "shape": [
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/train/train_ids.npy",
+      "bytes": 194164256,
+      "sha256": "1308353de16f698a25240ffc98abba5db04563ab3574c46d7c24bc25ab1e617b",
+      "shape": [
+        12135258,
+        4
+      ],
+      "dtype": "int32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/train/train_weights.npy",
+      "bytes": 194164256,
+      "sha256": "c60f0f1989ce57fe7ca20c68ceca6f8c7703e90284db2156f109207a77df63db",
+      "shape": [
+        12135258,
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/train/train_counts.npy",
+      "bytes": 12135386,
+      "sha256": "b938aec7e74ce877791fa26f020c52ececf5c3c74e9c8fff88856072a92a9f37",
+      "shape": [
+        12135258
+      ],
+      "dtype": "uint8"
+    },
+    {
+      "path": "dataset/phasemix/manifest/val/val_ids.npy",
+      "bytes": 1600128,
+      "sha256": "4ac85f867004cfcb641d51273dffd879cb7cdc0172ebf65eb243b68d286be4f5",
+      "shape": [
+        100000,
+        4
+      ],
+      "dtype": "int32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/val/val_weights.npy",
+      "bytes": 1600128,
+      "sha256": "f1d0e05c8c7f3a4d480e85a6c528cde039c37a14f46b8e5e6311fd18ca98fb03",
+      "shape": [
+        100000,
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/val/val_counts.npy",
+      "bytes": 100128,
+      "sha256": "2d136550393ebf88cb422f21ea37587ba20764b3b4aa2481983864315011b9be",
+      "shape": [
+        100000
+      ],
+      "dtype": "uint8"
+    },
+    {
+      "path": "dataset/phasemix/manifest/test/test_ids.npy",
+      "bytes": 1600128,
+      "sha256": "22f332b88b454bfa30e4320734757d2d882f49fc28f1f04825717b4d3b343c4b",
+      "shape": [
+        100000,
+        4
+      ],
+      "dtype": "int32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/test/test_weights.npy",
+      "bytes": 1600128,
+      "sha256": "adb20f471661ac963f3f3b995b4fd51141bb5438f42e32d358091c0eb70ebff3",
+      "shape": [
+        100000,
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/phasemix/manifest/test/test_counts.npy",
+      "bytes": 100128,
+      "sha256": "1f1c2d0aeb6e03405085995195ba9bc05642acc9a2666b3cac978b74fd7deb04",
+      "shape": [
+        100000
+      ],
+      "dtype": "uint8"
+    },
+    {
+      "path": "ckpt/rruff/single.pt",
+      "bytes": 60294442,
+      "sha256": "8839053b930a6f51710d2f5713bd963bbba62e80ad8aec872e51340274f356fa"
+    },
+    {
+      "path": "ckpt/rruff/phase.pt",
+      "bytes": 184515166,
+      "sha256": "7fc73304ca07eb81348095bba766b9b131c97fe25e4160fea04dfabb1490d0d5"
+    },
+    {
+      "path": "ckpt/rruff/last.pt",
+      "bytes": 218159113,
+      "sha256": "146bbc324dfb60ca1e03560bff2ec2360adb9cf4b766a81e55e0999e32b20c77"
+    },
+    {
+      "path": "dataset/rruff/reference/patterns.npy",
+      "bytes": 10363088,
+      "sha256": "2a942abc04ccbae00494c1bb12c34b523e78a6a1618538a465da88649c042bf6",
+      "shape": [
+        740,
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/reference/entry.npy",
+      "bytes": 26768,
+      "sha256": "c9b4860073fd111310ff2d3049322f7fff940d863c908758578c6787721778a2",
+      "shape": [
+        740
+      ],
+      "dtype": "<U9"
+    },
+    {
+      "path": "dataset/rruff/reference/axis_two_theta.npy",
+      "bytes": 14132,
+      "sha256": "408c1e22e665bd49497a4b9c28b476cc8317646e097cf690df37289e3b278d5b",
+      "shape": [
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/observations/patterns.npy",
+      "bytes": 51814928,
+      "sha256": "2f528849c6535c2ed43512b8df6dcfddb2b55881b0b904dc2bb908e7a1ff4b87",
+      "shape": [
+        740,
+        5,
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/observations/entry.npy",
+      "bytes": 26768,
+      "sha256": "c9b4860073fd111310ff2d3049322f7fff940d863c908758578c6787721778a2",
+      "shape": [
+        740
+      ],
+      "dtype": "<U9"
+    },
+    {
+      "path": "dataset/rruff/observations/axis_two_theta.npy",
+      "bytes": 14132,
+      "sha256": "408c1e22e665bd49497a4b9c28b476cc8317646e097cf690df37289e3b278d5b",
+      "shape": [
+        3501
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/manifest/train/train_ids.npy",
+      "bytes": 3200128,
+      "sha256": "79e1f0e99d34e0678557311875ccbe582ac46c32574cf8b95205617557dc75ad",
+      "shape": [
+        100000,
+        4
+      ],
+      "dtype": "int64"
+    },
+    {
+      "path": "dataset/rruff/manifest/train/train_weights.npy",
+      "bytes": 1600128,
+      "sha256": "2b2f6f3d240b7f0b3a5eac1996e0e246c9ce7de4de17d0659928f62e0a9494c8",
+      "shape": [
+        100000,
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/manifest/train/train_counts.npy",
+      "bytes": 800128,
+      "sha256": "4fa8242eb540f799fcbc9def39aca676f4f1aa895a7446808a83659899d534a2",
+      "shape": [
+        100000
+      ],
+      "dtype": "int64"
+    },
+    {
+      "path": "dataset/rruff/manifest/val/val_ids.npy",
+      "bytes": 236928,
+      "sha256": "d4e6009ee6b02d08e342b4b707ee47dc024e52b831bbb78071ee708ce1c52ef3",
+      "shape": [
+        7400,
+        4
+      ],
+      "dtype": "int64"
+    },
+    {
+      "path": "dataset/rruff/manifest/val/val_weights.npy",
+      "bytes": 118528,
+      "sha256": "3c29de4c422db2c805f47edc9ed2c04fe7a5a6db1b95841796bcf7d8933ae3d2",
+      "shape": [
+        7400,
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/manifest/val/val_counts.npy",
+      "bytes": 59328,
+      "sha256": "15938f56b7f18b5fdeb031622300a9da1bc5b301bf6e0869d78347020d6e70ba",
+      "shape": [
+        7400
+      ],
+      "dtype": "int64"
+    },
+    {
+      "path": "dataset/rruff/manifest/test/test_ids.npy",
+      "bytes": 236928,
+      "sha256": "e52d6c2e71546ece38f6d0c144b850ba389a89924d29b663be11306d971d71c9",
+      "shape": [
+        7400,
+        4
+      ],
+      "dtype": "int64"
+    },
+    {
+      "path": "dataset/rruff/manifest/test/test_weights.npy",
+      "bytes": 118528,
+      "sha256": "3707ba68bcd0ac618671f8a636416ab4cade48dfb3ad63cf10ceae43b83dc89a",
+      "shape": [
+        7400,
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "dataset/rruff/manifest/test/test_counts.npy",
+      "bytes": 59328,
+      "sha256": "15938f56b7f18b5fdeb031622300a9da1bc5b301bf6e0869d78347020d6e70ba",
+      "shape": [
+        7400
+      ],
+      "dtype": "int64"
+    }
+  ]
+}
