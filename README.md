@@ -43,10 +43,10 @@ Tests use small generated fixtures and do not require datasets or pretrained wei
 
 | Dataset | Reference entries | Data | Final weights |
 |---|---:|---|---|
-| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) — uploading | Upload retry in progress |
+| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) — available | Upload retry in progress |
 | RRUFF-based mixtures | 740 | Upload pending | Verified in release draft |
 
-**Asset publication is still in progress.** See [resource status, placement and verification](docs/resources.md) before using pretrained examples. Dataset binaries and weights are hosted separately from source code.
+**Some assets are still being published.** See [resource status, placement and verification](docs/resources.md) before using pretrained examples. Dataset binaries and weights are hosted separately from source code.
 
 ### 3. Run a test-set example
 

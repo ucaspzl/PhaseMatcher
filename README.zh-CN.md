@@ -43,10 +43,10 @@ python -m pytest -q
 
 | 数据集 | 参考库条目数 | 数据 | 最终权重 |
 |---|---:|---|---|
-| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k)，上传中 | 正在重新上传 |
+| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k)，已发布 | 正在重新上传 |
 | 基于 RRUFF 的混合谱 | 740 | 待上传 | 已在 Release 草稿中校验通过 |
 
-**资源目前尚未全部发布。** 使用预训练示例前，请先查看[下载状态、放置路径与校验方法](docs/resources.zh-CN.md)。数据和权重单独托管，不混入源码。
+**部分资源仍在发布中。** 使用预训练示例前，请先查看[下载状态、放置路径与校验方法](docs/resources.zh-CN.md)。数据和权重单独托管，不混入源码。
 
 ### 3. 跑一个测试集样本
 

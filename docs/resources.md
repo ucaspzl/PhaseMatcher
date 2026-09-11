@@ -6,7 +6,7 @@
 
 | Resource | Location | Status |
 |---|---|---|
-| PhaseMix-135K dataset | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | Upload in progress; not yet verified complete |
+| PhaseMix-135K dataset | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | Available; 15 files and SHA-256 checksums verified |
 | RRUFF-based mixture dataset | Hugging Face repository pending | Not uploaded |
 | Final inference weights | [GitHub Releases](https://github.com/ucaspzl/PhaseMatcher/releases) | RRUFF verified in draft; PhaseMix upload retry in progress |
 
@@ -25,7 +25,7 @@ The final weights include the encoder, Phase/STOP heads and spectral decompositi
 
 ## File placement
 
-Download the contents of the Hugging Face dataset repository into `dataset/phasemix/` (not a second nested `phasemix/` directory). For example, after the dataset upload is complete:
+Download the contents of the Hugging Face dataset repository into `dataset/phasemix/` (not a second nested `phasemix/` directory):
 
 ```bash
 hf download pengzhonglong/PhaseMix-135k --repo-type dataset --local-dir dataset/phasemix

@@ -6,7 +6,7 @@
 
 | 资源 | 位置 | 状态 |
 |---|---|---|
-| PhaseMix-135K 数据集 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | 上传中，尚未完成整体校验 |
+| PhaseMix-135K 数据集 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | 已发布；15 个文件及 SHA-256 均已校验 |
 | 基于 RRUFF 的混合谱数据集 | Hugging Face 仓库待建立 | 尚未上传 |
 | 最终推理权重 | [GitHub Releases](https://github.com/ucaspzl/PhaseMatcher/releases) | RRUFF 已在草稿中校验通过；PhaseMix 正在重传 |
 
@@ -25,7 +25,7 @@
 
 ## 放置路径
 
-将 Hugging Face 数据仓库中的内容下载到 `dataset/phasemix/`，不要再嵌套一层 `phasemix/`。数据上传完成后，可执行：
+将 Hugging Face 数据仓库中的内容下载到 `dataset/phasemix/`，不要再嵌套一层 `phasemix/`：
 
 ```bash
 hf download pengzhonglong/PhaseMix-135k --repo-type dataset --local-dir dataset/phasemix
