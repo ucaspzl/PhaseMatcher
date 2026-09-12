@@ -43,10 +43,10 @@ python -m pytest -q
 
 | 数据集 | 参考库条目数 | 数据 | 最终权重 |
 |---|---:|---|---|
-| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k)，已发布 | 正在重新上传 |
-| 基于 RRUFF 的混合谱 | 740 | 待上传 | 已在 Release 草稿中校验通过 |
+| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | [下载 last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) |
+| 基于 RRUFF 的混合谱 | 740 | 尚未发布 | [下载 last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) |
 
-**部分资源仍在发布中。** 使用预训练示例前，请先查看[下载状态、放置路径与校验方法](docs/resources.zh-CN.md)。数据和权重单独托管，不混入源码。
+两个最终权重均已在 [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1) 发布，文件大小与 SHA-256 已校验。仓库当前为私有，下载代码和权重需要访问权限。放置路径见[资源指南](docs/resources.zh-CN.md)。运行 RRUFF 示例还需要尚未发布的 RRUFF 参考库和数据集。
 
 ### 3. 跑一个测试集样本
 
@@ -94,6 +94,8 @@ src/phasematcher/
 
 建议从 [models/system.py](src/phasematcher/models/system.py) 看模型组成，再读 [inference/search.py](src/phasematcher/inference/search.py)。配置在 `configs/`，运行示例在 `examples/`，回归测试在 `tests/`。
 
+本仓库只包含 PhaseMatcher 的源码、配置、示例、测试、说明和资源元数据，不打包各个 baseline 的实现。权重通过 Releases 下载，数据集单独托管。
+
 | 文档 | 内容 |
 |---|---|
 | [资源指南](docs/resources.zh-CN.md) | 下载、放置与完整性校验 |
@@ -104,4 +106,6 @@ src/phasematcher/
 
 ## 发布与许可
 
-GitHub 仓库当前为私有。代码与权重尚未指定许可证；PhaseMix 数据仓库声明 CC BY 4.0；RRUFF 再分发条款待补充。论文链接及引用信息将在正式发布后添加。
+PhaseMatcher 自有代码与两个最终权重采用 [MIT 许可](LICENSE)。数据集和第三方内容保留各自条款，见[许可说明](docs/licensing.zh-CN.md)。
+
+GitHub 仓库当前为私有。论文链接及引用信息将在正式发布后添加。

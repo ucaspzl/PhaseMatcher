@@ -8,9 +8,14 @@
 |---|---|---|
 | PhaseMix-135K dataset | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | Available; 15 files and SHA-256 checksums verified |
 | RRUFF-based mixture dataset | Hugging Face repository pending | Not uploaded |
-| Final inference weights | [GitHub Releases](https://github.com/ucaspzl/PhaseMatcher/releases) | RRUFF verified in draft; PhaseMix upload retry in progress |
+| Final inference weights | [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1) | Both published; sizes and SHA-256 hashes verified |
 
-The checkpoint release tag will be `checkpoints-v1`. GitHub is currently private: downloading requires repository access. The dataset repository and code repository have independent visibility settings.
+GitHub is currently private: downloading code or weights requires repository access. The dataset repository and code repository have independent visibility settings.
+
+| Checkpoint | Size (bytes) | Local path |
+|---|---:|---|
+| [phasemix-last.pt](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) | 493,651,977 | `ckpt/phasemix/last.pt` |
+| [rruff-last.pt](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) | 218,159,113 | `ckpt/rruff/last.pt` |
 
 ## What to download
 
@@ -21,7 +26,7 @@ The checkpoint release tag will be `checkpoints-v1`. GitHub is currently private
 | Train from scratch | All three dataset folders; each stage uses the preceding stage's output |
 | Initialize from an archived stage | Corresponding `single.pt` or `phase.pt` (not currently published) |
 
-The final weights include the encoder, Phase/STOP heads and spectral decomposition module. They do not include optimizer state.
+The final weights include the encoder, Phase/STOP heads and spectral decomposition module. They do not include optimizer state. Both final weights use the [MIT License](../LICENSE); datasets and reference libraries retain separate terms ([details](licensing.md)).
 
 ## File placement
 
@@ -31,7 +36,7 @@ Download the contents of the Hugging Face dataset repository into `dataset/phase
 hf download pengzhonglong/PhaseMix-135k --repo-type dataset --local-dir dataset/phasemix
 ```
 
-After the checkpoint release is published, download `phasemix-last.pt` or `rruff-last.pt` and rename it to `last.pt` in the corresponding directory:
+Download the checkpoint above and rename it to `last.pt` in the corresponding directory:
 
 ```text
 PhaseMatcher/

@@ -43,10 +43,10 @@ Tests use small generated fixtures and do not require datasets or pretrained wei
 
 | Dataset | Reference entries | Data | Final weights |
 |---|---:|---|---|
-| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) — available | Upload retry in progress |
-| RRUFF-based mixtures | 740 | Upload pending | Verified in release draft |
+| PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | [Download last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) |
+| RRUFF-based mixtures | 740 | Not yet published | [Download last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) |
 
-**Some assets are still being published.** See [resource status, placement and verification](docs/resources.md) before using pretrained examples. Dataset binaries and weights are hosted separately from source code.
+Both final checkpoints are published in [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1), with verified sizes and SHA-256 hashes. The repository is currently private, so code and weight downloads require access. See [file placement and verification](docs/resources.md). RRUFF examples additionally require the unpublished RRUFF reference library and dataset.
 
 ### 3. Run a test-set example
 
@@ -94,6 +94,8 @@ src/phasematcher/
 
 Start with [models/system.py](src/phasematcher/models/system.py), then [inference/search.py](src/phasematcher/inference/search.py). Configurations live in `configs/`, runnable examples in `examples/`, and regression tests in `tests/`.
 
+This repository contains PhaseMatcher only: source code, configurations, examples, tests, documentation, and resource metadata. Baseline implementations are not bundled. Checkpoints are distributed through Releases; datasets are hosted separately.
+
 | Guide | Contents |
 |---|---|
 | [Resources](docs/resources.md) | Download locations, placement and integrity checks |
@@ -104,4 +106,6 @@ Start with [models/system.py](src/phasematcher/models/system.py), then [inferenc
 
 ## Availability and licensing
 
-The GitHub repository is currently private. No code or weight license has been assigned yet. The PhaseMix dataset repository declares CC BY 4.0; RRUFF redistribution terms remain to be documented. A paper link and citation will be added when available.
+PhaseMatcher's original code and the two final checkpoints are released under the [MIT License](LICENSE). Datasets and third-party content retain their own terms; see [licensing details](docs/licensing.md).
+
+The GitHub repository is currently private. A paper link and citation will be added when available.

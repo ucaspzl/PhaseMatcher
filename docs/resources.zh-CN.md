@@ -8,9 +8,14 @@
 |---|---|---|
 | PhaseMix-135K 数据集 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | 已发布；15 个文件及 SHA-256 均已校验 |
 | 基于 RRUFF 的混合谱数据集 | Hugging Face 仓库待建立 | 尚未上传 |
-| 最终推理权重 | [GitHub Releases](https://github.com/ucaspzl/PhaseMatcher/releases) | RRUFF 已在草稿中校验通过；PhaseMix 正在重传 |
+| 最终推理权重 | [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1) | 两个权重均已发布，大小与 SHA-256 已校验 |
 
 权重版本标签为 `checkpoints-v1`。GitHub 仓库当前为私有，下载需要仓库访问权限。数据仓库与代码仓库的公开设置相互独立。
+
+| 权重 | 大小（字节） | 本地路径 |
+|---|---:|---|
+| [phasemix-last.pt](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) | 493,651,977 | `ckpt/phasemix/last.pt` |
+| [rruff-last.pt](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) | 218,159,113 | `ckpt/rruff/last.pt` |
 
 ## 需要下载哪些文件
 
@@ -21,7 +26,7 @@
 | 从头训练 | 数据集的三个文件夹；后续阶段使用前一阶段的训练输出 |
 | 使用归档阶段权重初始化 | 对应的 `single.pt` 或 `phase.pt`，目前尚未发布 |
 
-最终权重包含编码器、Phase/STOP 双头与谱分解模块，不含优化器状态。
+最终权重包含编码器、Phase/STOP 双头与谱分解模块，不含优化器状态。两个最终权重采用 [MIT 许可](../LICENSE)，数据集和参考库保留各自条款（[许可说明](licensing.zh-CN.md)）。
 
 ## 放置路径
 
@@ -31,7 +36,7 @@
 hf download pengzhonglong/PhaseMix-135k --repo-type dataset --local-dir dataset/phasemix
 ```
 
-权重 Release 发布后，下载 `phasemix-last.pt` 或 `rruff-last.pt`，分别放到对应目录，并重命名为 `last.pt`：
+下载上表中的权重，分别放到对应目录，并重命名为 `last.pt`：
 
 ```text
 PhaseMatcher/
