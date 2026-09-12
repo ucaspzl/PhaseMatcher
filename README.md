@@ -41,12 +41,12 @@ Tests use small generated fixtures and do not require datasets or pretrained wei
 
 ### 2. Get data and weights
 
-| Dataset | Reference entries | Data | Final weights |
+| Dataset | Reference entries | Data / setup | Final weights |
 |---|---:|---|---|
 | PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | [Download last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) |
-| RRUFF-based mixtures | 740 | Not yet published | [Download last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) |
+| RRUFF-based mixtures | 740 | [Data layout](docs/resources.md#rruff-data) | [Download last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) |
 
-Both final checkpoints are published in [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1), with verified sizes and SHA-256 hashes. The repository is currently private, so code and weight downloads require access. See [file placement and verification](docs/resources.md). RRUFF examples additionally require the unpublished RRUFF reference library and dataset.
+Download the checkpoint for your dataset and follow the [setup guide](docs/resources.md) to place the files and verify their checksums.
 
 ### 3. Run a test-set example
 
@@ -104,8 +104,6 @@ This repository contains PhaseMatcher only: source code, configurations, example
 | [Architecture](docs/architecture.md) | Components, data flow and tensor interfaces |
 | [Data specification](docs/data.md) | Splits, array fields and observation construction |
 
-## Availability and licensing
+## License
 
 PhaseMatcher's original code and the two final checkpoints are released under the [MIT License](LICENSE). Datasets and third-party content retain their own terms; see [licensing details](docs/licensing.md).
-
-The GitHub repository is currently private. A paper link and citation will be added when available.

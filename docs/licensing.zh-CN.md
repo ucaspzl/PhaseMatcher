@@ -7,7 +7,7 @@
 | PhaseMatcher 自有源码与说明文档 | [MIT](../LICENSE) |
 | 下表列出的最终 PhaseMatcher 权重 | [MIT](../LICENSE) |
 | PhaseMix-135K 数据集 | 按[数据仓库](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k)声明的 CC BY 4.0 |
-| RRUFF 派生数据与参考谱 | 不适用代码或权重的 MIT 许可；再分发条款需在数据发布前单独明确 |
+| RRUFF 派生数据与参考谱 | 适用独立的数据权利与再分发条款，不包含在代码和权重的 MIT 授权中 |
 | 第三方软件及其他第三方内容 | 各自的原有许可 |
 
 ## 最终权重

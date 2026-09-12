@@ -41,12 +41,12 @@ python -m pytest -q
 
 ### 2. 下载数据与权重
 
-| 数据集 | 参考库条目数 | 数据 | 最终权重 |
+| 数据集 | 参考库条目数 | 数据与配置 | 最终权重 |
 |---|---:|---|---|
 | PhaseMix-135K | 135,258 | [Hugging Face](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) | [下载 last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/phasemix-last.pt) |
-| 基于 RRUFF 的混合谱 | 740 | 尚未发布 | [下载 last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) |
+| 基于 RRUFF 的混合谱 | 740 | [数据放置说明](docs/resources.zh-CN.md#rruff-数据) | [下载 last](https://github.com/ucaspzl/PhaseMatcher/releases/download/checkpoints-v1/rruff-last.pt) |
 
-两个最终权重均已在 [checkpoints-v1](https://github.com/ucaspzl/PhaseMatcher/releases/tag/checkpoints-v1) 发布，文件大小与 SHA-256 已校验。仓库当前为私有，下载代码和权重需要访问权限。放置路径见[资源指南](docs/resources.zh-CN.md)。运行 RRUFF 示例还需要尚未发布的 RRUFF 参考库和数据集。
+下载对应数据集的权重，按照[资源指南](docs/resources.zh-CN.md)放置文件并校验完整性。
 
 ### 3. 跑一个测试集样本
 
@@ -104,8 +104,6 @@ src/phasematcher/
 | [模型结构（中文）](docs/architecture.zh-CN.md) | 数据流、模块职责、损失与搜索 |
 | [数据规范（中文）](docs/data.zh-CN.md) | 划分、字段形状、观测构造 |
 
-## 发布与许可
+## 许可
 
 PhaseMatcher 自有代码与两个最终权重采用 [MIT 许可](LICENSE)。数据集和第三方内容保留各自条款，见[许可说明](docs/licensing.zh-CN.md)。
-
-GitHub 仓库当前为私有。论文链接及引用信息将在正式发布后添加。

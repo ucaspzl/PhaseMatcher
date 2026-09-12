@@ -7,7 +7,7 @@
 | Original PhaseMatcher source code and documentation | [MIT](../LICENSE) |
 | Final PhaseMatcher checkpoints listed below | [MIT](../LICENSE) |
 | PhaseMix-135K dataset | CC BY 4.0 as declared in the [dataset repository](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) |
-| RRUFF-derived data and reference patterns | Not covered by the code or checkpoint license; redistribution terms remain to be documented before publication |
+| RRUFF-derived data and reference patterns | Separate data rights and redistribution terms; outside the code and checkpoint MIT grant |
 | Third-party software and other third-party content | Their respective licenses |
 
 ## Final checkpoints

@@ -1,8 +1,8 @@
 # PhaseMatcher final checkpoints v1
 
-Final stage-three **last** checkpoints used for evaluation, not validation-selected best checkpoints. Both files are fully uploaded and verified against the asset manifest.
+Final stage-three **last** checkpoints for PhaseMix-135K and RRUFF evaluation.
 
-用于最终评测的阶段三 **last** 权重，并非按验证集筛选的 best。两个文件均已上传，大小与 SHA-256 已核验。
+用于 PhaseMix-135K 与 RRUFF 评测的阶段三 **last** 权重。
 
 | Asset / 文件 | Dataset / 数据集 | Global step / 步数 | Local path / 放置路径 |
 |---|---|---:|---|
@@ -21,11 +21,9 @@ PhaseMatcher 自有代码及这两个最终权重采用 MIT；再分发时须保
 
 ## Data and source / 数据与源码
 
-- [PhaseMix-135K dataset](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) is available on Hugging Face. RRUFF data are not yet published. / PhaseMix 数据已发布；RRUFF 数据尚未发布。
+- [PhaseMix-135K dataset / 数据集](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k).
 - [PhaseMatcher source](https://github.com/ucaspzl/PhaseMatcher/tree/main) contains no bundled baseline implementations. Data and checkpoint binaries are distributed separately. / 源码只包含 PhaseMatcher，不打包 baseline，数据和权重单独下载。
 - [Download and setup guide / 下载与放置指南](https://github.com/ucaspzl/PhaseMatcher/blob/main/docs/resources.md) · [中文](https://github.com/ucaspzl/PhaseMatcher/blob/main/docs/resources.zh-CN.md).
-
-The GitHub repository remains private; code and weight downloads require repository access. / GitHub 仓库仍为私有，下载代码与权重需要仓库访问权限。
 
 ## SHA-256
 
