@@ -10,7 +10,7 @@
 | `phase` | 单相编码器与物相身份权重 | 加权下一物相交叉熵＋谱分解损失 |
 | `stop` | Phase 阶段模型；新初始化 STOP 分支 | 加权物相交叉熵＋STOP 交叉熵＋谱分解损失 |
 
-各项损失的外层权重默认均为 1。谱分解的七项内部损失及权重见[模型结构](architecture.zh-CN.md)。第二阶段联合优化预测与谱分解，不需要单独运行谱分解预训练命令。
+各项损失的外层权重默认均为 1。谱分解的七项内部损失及权重见[模型结构](architecture.zh-CN.md)。第二阶段联合优化预测与谱分解。
 
 在仓库根目录运行。第一条命令会在 `outputs/` 下创建带时间戳的运行目录；后续命令中的占位路径需替换为实际前一阶段导出的 `last.pt`：
 
@@ -20,7 +20,7 @@ phasematcher train --config configs/phasemix.yaml --stage phase --init outputs/p
 phasematcher train --config configs/phasemix.yaml --stage stop --init outputs/phasemix/phase_RUN/last.pt --devices 1
 ```
 
-`single_RUN` 和 `phase_RUN` 是路径示意，不是已经存在的目录。实际位置由配置中的 `output_root` 和运行时间决定。RRUFF 使用 `configs/rruff.yaml`。归档的联合训练使用七张 GPU；改变设备数会改变有效批量和训练轨迹。
+`single_RUN` 和 `phase_RUN` 是路径示意，实际位置由配置中的 `output_root` 和运行时间决定。RRUFF 使用 `configs/rruff.yaml`。联合训练使用七张 GPU；改变设备数会改变有效批量和训练轨迹。
 
 ## 优化设置
 
@@ -34,7 +34,7 @@ phasematcher train --config configs/phasemix.yaml --stage stop --init outputs/ph
 
 预测部分和谱分解部分使用相同的初始学习率。每次验证后触发 `ReduceLROnPlateau`；连续四次验证未改善后将学习率减半（`patience=3`），最低为 5e-6。Phase 阶段监控固定相数识别，STOP 阶段监控自动停止识别。
 
-单相默认配置是可运行的起点，不保证精确复现归档的单相初始化。完整配置见 [base.yaml](../configs/base.yaml)、[phasemix.yaml](../configs/phasemix.yaml) 和 [rruff.yaml](../configs/rruff.yaml)。
+单相默认配置提供参考训练配方；评测模型的单相预训练初始学习率、有效批量大小和训练精度缺少记录。配置选项见 [base.yaml](../configs/base.yaml)、[phasemix.yaml](../configs/phasemix.yaml) 和 [rruff.yaml](../configs/rruff.yaml)。
 
 ## 训练输出与恢复
 

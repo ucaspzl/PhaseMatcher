@@ -64,4 +64,4 @@ Library IDs are **0 through N−1**. STOP is the final joint-logit column N, not
 
 Inference masks selected phases and disallows STOP before selecting a first phase. Training does not apply those action masks. Beam separately retains up to W unfinished and W completed paths, scored by cumulative action log-probability. Different orders of the same set are not deduplicated. Reaching four phases ends a path without adding a STOP score.
 
-References are sorted by ID for decomposition, while decoder history preserves prediction order. Both search strategies accept known-phase histories. Inference and training retain their respective residual-normalization thresholds; these numerical conventions have not been changed during repository cleanup.
+References are sorted by ID for decomposition, while decoder history preserves prediction order. Both search strategies accept known-phase histories. Residual max-normalization uses a denominator floor of 1e-6 at inference and 1e-8 during training; inference treats residuals with a maximum at most 1e-8 as zero.

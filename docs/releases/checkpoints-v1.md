@@ -22,7 +22,7 @@ PhaseMatcher 自有代码及这两个最终权重采用 MIT；再分发时须保
 ## Data and source / 数据与源码
 
 - [PhaseMix-135K dataset](https://huggingface.co/datasets/pengzhonglong/PhaseMix-135k) is available on Hugging Face. RRUFF data are not yet published. / PhaseMix 数据已发布；RRUFF 数据尚未发布。
-- [Current PhaseMatcher source](https://github.com/ucaspzl/PhaseMatcher/tree/main) contains no bundled baseline implementations. Data and checkpoint binaries are distributed separately. / 当前源码只包含 PhaseMatcher，不打包 baseline，数据和权重单独下载。
+- [PhaseMatcher source](https://github.com/ucaspzl/PhaseMatcher/tree/main) contains no bundled baseline implementations. Data and checkpoint binaries are distributed separately. / 源码只包含 PhaseMatcher，不打包 baseline，数据和权重单独下载。
 - [Download and setup guide / 下载与放置指南](https://github.com/ucaspzl/PhaseMatcher/blob/main/docs/resources.md) · [中文](https://github.com/ucaspzl/PhaseMatcher/blob/main/docs/resources.zh-CN.md).
 
 The GitHub repository remains private; code and weight downloads require repository access. / GitHub 仓库仍为私有，下载代码与权重需要仓库访问权限。

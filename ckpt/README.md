@@ -14,19 +14,19 @@
 下载后按上表重命名为 `last.pt`。预测和评测只需要对应的最终权重与数据资源。
 可用 `phasematcher check --config configs/phasemix.yaml --hash` 校验推理必需资源；无需前两阶段权重。
 SHA-256 见对应的 `last.json` 或根目录 `assets.json`。
-`single.pt` 和 `phase.pt` 尚未上传；以下保留本地三阶段资产的来源说明。
+三阶段权重的含义如下；`single.pt` 和 `phase.pt` 尚未发布。
 
 | 数据集 | single.pt | phase.pt | last.pt |
 |---|---|---|---|
-| phasemix | 既有单相初始化 | v2 多相联合训练 last，120000 步 | v2 STOP 联合训练 last，40000 步 |
-| rruff | RRUFF 单相初始化 | 新扰动混合谱联合训练 last，3715 步 | 对应 STOP last，1429 步 |
+| PhaseMix-135K | 单相预训练权重 | 多相联合训练最终权重，120,000 步 | 加入 STOP 的联合训练最终权重，40,000 步 |
+| RRUFF | 单相预训练权重 | 多相联合训练最终权重，3,715 步 | 加入 STOP 的联合训练最终权重，1,429 步 |
 
-`last.pt` 是当前用于最终测试的阶段三权重，不是按验证集筛选的 best。
+`last.pt` 是用于最终评测的阶段三训练结束权重。
 每个文件旁的 JSON 包含来源 checkpoint 哈希、参考库顺序哈希、架构和训练进度。
-`assets.json` 提供整理后文件的 SHA-256。
+`assets.json` 提供各文件的 SHA-256。
 
-格式只有一个版本：`format_version=1`，参数前缀统一为 `model.*` 和 `spectral_decomposition.*`；
-单相文件为 `encoder.*` 和 `classifier.*`。不兼容旧命名，也不自动猜测旧 checkpoint 格式。
+文件格式为 `format_version=1`，参数前缀为 `model.*` 和 `spectral_decomposition.*`；
+单相文件为 `encoder.*` 和 `classifier.*`。
 
-这是精简的纯权重导出，未保存原优化器和调度器状态。可用于预测、评测或下一阶段初始化。
-原始完整 checkpoint 未修改。新训练会另外生成自己的可恢复 `.ckpt`。
+`.pt` 仅保存模型权重，可用于预测、评测或下一阶段初始化。
+恢复中断训练需使用训练过程中保存的 `.ckpt`，其中包含优化器和调度器状态。

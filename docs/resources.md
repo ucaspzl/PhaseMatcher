@@ -24,7 +24,7 @@ GitHub is currently private: downloading code or weights requires repository acc
 | Predict your own spectrum | Dataset's `reference/` folder + final `last.pt` |
 | Run the example or evaluate | All three dataset folders + final `last.pt` |
 | Train from scratch | All three dataset folders; each stage uses the preceding stage's output |
-| Initialize from an archived stage | Corresponding `single.pt` or `phase.pt` (not currently published) |
+| Initialize a later training stage | The preceding stage's `single.pt` or `phase.pt` (not published) |
 
 The final weights include the encoder, Phase/STOP heads and spectral decomposition module. They do not include optimizer state. Both final weights use the [MIT License](../LICENSE); datasets and reference libraries retain separate terms ([details](licensing.md)).
 

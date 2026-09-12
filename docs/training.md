@@ -10,7 +10,7 @@
 | `phase` | Single-phase encoder and identity weights | Weighted next-phase cross-entropy + spectral decomposition loss |
 | `stop` | Phase-stage model; new STOP branch | Weighted phase cross-entropy + STOP cross-entropy + spectral decomposition loss |
 
-All outer loss weights default to 1. The seven decomposition terms and their weights are listed in [the architecture reference](architecture.md). The phase stage jointly optimizes prediction and decomposition; there is no separate decomposition-pretraining command.
+All outer loss weights default to 1. The seven decomposition terms and their weights are listed in [the architecture reference](architecture.md). The phase stage jointly optimizes prediction and decomposition.
 
 Run from the repository root. The first command produces a timestamped run directory under `outputs/`; replace the placeholder paths in later commands with the actual preceding run's exported `last.pt`:
 
@@ -34,7 +34,7 @@ The paths above illustrate the pattern; they are not pre-existing files. Check t
 
 Prediction and decomposition use the same initial learning rate. `ReduceLROnPlateau` is stepped after validation, halves the rate after four consecutive non-improving checks (`patience=3`), and bottoms out at 5e-6. The phase stage monitors fixed-count identification; the STOP stage monitors automatic-stop identification.
 
-The single-phase default recipe is an executable starting point, not a claim to exactly reproduce the archived single-phase initialization. For full settings, see [base.yaml](../configs/base.yaml), [phasemix.yaml](../configs/phasemix.yaml), and [rruff.yaml](../configs/rruff.yaml).
+Single-phase defaults provide a reference recipe. The pretraining initial learning rate, effective batch size, and precision for the evaluated model are unavailable. For configuration options, see [base.yaml](../configs/base.yaml), [phasemix.yaml](../configs/phasemix.yaml), and [rruff.yaml](../configs/rruff.yaml).
 
 ## Outputs and recovery
 
